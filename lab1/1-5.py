@@ -9,7 +9,7 @@ F = 100000  # Frequency
 N = 500
 speakers = np.array([[0, 0, 10], [20, 0, 10], [20, 20, 10], [0, 20, 10]])
 
-f = open('D:\everything\code\lab\signals\data files\Transmitter.txt', 'r')
+f = open('D:\everything\code\lab\signals\lab1\data files\Transmitter.txt', 'r')
 text = f.read()
 f.close()
 rows =  text.split('\n')
@@ -20,7 +20,7 @@ for i in range(0, 4):
     num_array = str_array.astype(np.float64)
     s_records[:, i] = num_array
 
-f = open('D:\everything\code\lab\signals\data files\Receiver.txt', 'r')
+f = open('D:\everything\code\lab\signals\lab1\data files\Receiver.txt', 'r')
 text = f.read()
 f.close()
 received_txt = np.array(re.split('[ \t]+', text))[1:]

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Landmarks
 marks = []
-with open("D:\everything\code\lab\signals\data files\landmarks.dat") as file:
+with open("D:\everything\code\lab\signals\lab1\data files\landmarks.dat") as file:
     for line in file.readlines():
         coord = line.split()
         marks.append([float(coord[1]), float(coord[2])])
@@ -25,18 +25,18 @@ def Fx(state, u):
                       [0, 1, u[1] * math.cos(state[0, 2] + u[0])],
                       [0, 0, 1]])
 
-def kalman(state, m, P, u):
-    R = np.eye(len(state)) * 0.2
+def kalman(obs, m, P, u):
+    R = np.eye(len(obs)) * 0.2
     # Prediction
     F = Fx(m, u)
     m = upd(m, u)
     P = F @ P @ F.T + Q
     # h and H calculating
-    h = np.zeros((1, len(state)))
-    H = np.zeros((len(state), 3))
-    y = np.zeros((1, len(state)))
+    h = np.zeros((1, len(obs)))
+    H = np.zeros((len(obs), 3))
+    y = np.zeros((1, len(obs)))
     nxt = 0
-    for i, r in state:
+    for i, r in obs:
         d_x = m[0, 0] - marks[i - 1][0]
         d_y = m[0, 1] - marks[i - 1][1]
         h[0, nxt] = math.sqrt(d_x ** 2 + d_y ** 2)
@@ -50,10 +50,10 @@ def kalman(state, m, P, u):
     P = P - K @ S @ K.T
     return [m, P]
 
-def ukalman(state, m, P, u):
+def ukalman(obs, m, P, u):
     # Prediction
     n = 3
-    R = np.eye(len(state)) * 0.2
+    R = np.eye(len(obs)) * 0.2
     lam = 1
     sig = np.zeros((2 * n + 1, n))
     sig[0, :] = np.array(m)
@@ -78,19 +78,19 @@ def ukalman(state, m, P, u):
     for i in range(n):
         sig[i + 1, :] = m + (math.sqrt(n + lam) * C[:, i]).T
         sig[i + n + 1, :] = m - (math.sqrt(n + lam) * C[:, i]).T
-    hsig = np.zeros((len(sig), len(state)))
-    y = np.zeros((1, len(state)))
+    hsig = np.zeros((len(sig), len(obs)))
+    y = np.zeros((1, len(obs)))
     for i in range(2 * n + 1):
         nxt = 0
-        for j, r in state:
+        for j, r in obs:
             d_x = sig[i, 0] - marks[j - 1][0]
             d_y = sig[i, 1] - marks[j - 1][1]
             hsig[i, nxt] = math.sqrt(d_x ** 2 + d_y ** 2)
             y[0, nxt] = r
             nxt += 1
-    mu = np.zeros((1, len(state)))
+    mu = np.zeros((1, len(obs)))
     S = np.array(R)
-    C = np.zeros((n, len(state)))
+    C = np.zeros((n, len(obs)))
     for i in range(2 * n + 1):
         mu = mu + W[i] * hsig[i, :]
     for i in range(2 * n + 1):
@@ -103,7 +103,7 @@ def ukalman(state, m, P, u):
 
 # EKF
 ekf_x, ekf_y = [], []
-with open("D:\everything\code\lab\signals\data files\sensor_data_ekf.dat") as file:
+with open("D:\everything\code\lab\signals\lab1\data files\sensor_data_ekf.dat") as file:
     sensors = []
     u = np.array([])
     m = np.array([[0, 0, 0]])
@@ -125,7 +125,7 @@ with open("D:\everything\code\lab\signals\data files\sensor_data_ekf.dat") as fi
 
 # UKF
 ukf_x, ukf_y = [], []
-with open("D:\everything\code\lab\signals\data files\sensor_data_ekf.dat") as file:
+with open("D:\everything\code\lab\signals\lab1\data files\sensor_data_ekf.dat") as file:
     sensors = []
     u = np.array([])
     m = np.array([[0, 0, 0]])
