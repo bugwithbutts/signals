@@ -14,24 +14,24 @@ for i in range(lattice):
 # Params
 N = 50
 L = len(r)
-lam = 0.05
-sig = 0.05
+lam = 0.05 ** 2
+sig = 0.05 ** 2
 mu = 1000
 C = np.array([[lam, 0, 0, 0],
                [0, lam, 0, 0],
                [0, 0, sig, 0],
                [0, 0, 0, sig]])
-G = np.eye(L) * 0.001
+G = np.eye(L) * 0.01 ** 2
 h = 10
 radius = 2
 
 def upd(state, t):
-    state[0, 0] = radius * math.cos(t * 2 * math.pi / 360)
+    state[0, 0] = radius * math.cos(2 * t * math.pi / 360)
     state[0, 1] = radius * math.sin(2 * t * math.pi / 360)
-    state[0, 2] += np.random.normal(0, C[2, 2])
-    state[0, 3] += np.random.normal(0, C[3, 3])
+    state[0, 2] += np.random.normal(0, np.sqrt(C[2, 2]))
+    state[0, 3] += np.random.normal(0, np.sqrt(C[3, 3]))
     # for i in range(4):
-    #     state[0, i] += np.random.normal(0, C[i, i])
+    #     state[0, i] += np.random.normal(0, np.sqrt(C[i, i]))
     return state
 
 def observe(state):
@@ -39,7 +39,7 @@ def observe(state):
     for i in range(L):
         d = np.sqrt((r[i][0] - state[0, 0]) ** 2 + (r[i][1] - state[0, 1]) ** 2 + h ** 2) ** 3
         b[0, i] = mu * ((r[i][1] - state[0, 1]) * state[0, 2] - (r[i][0] - state[0, 0]) * state[0, 3]) / d
-        b[0, i] += np.random.normal(0, G[i, i])
+        b[0, i] += np.random.normal(0, np.sqrt(G[i, i]))
     return b
 
 def H(state):
@@ -58,8 +58,8 @@ def kalman(m, P, u, w, y):
     m = (A @ m.T).T
     P = A @ P @ A.T + Q
     # Gen
-    u[0, 0] += np.random.normal(0, C[0, 0])
-    u[0, 1] += np.random.normal(0, C[1, 1])
+    u[0, 0] += np.random.normal(0, np.sqrt(C[0, 0]))
+    u[0, 1] += np.random.normal(0, np.sqrt(C[1, 1]))
     Hx = H(u)
     # Weight
     S = Hx @ P @ Hx.T + G

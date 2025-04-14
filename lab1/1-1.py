@@ -16,9 +16,9 @@ def upd(state):
 
 def observe(state):
     obs = np.array(state)
-    obs[0, 0] += np.random.normal(0, R[0, 0], 1)[0]
-    obs[0, 1] += np.random.normal(0, R[1, 1], 1)[0]
-    obs[0, 2] += np.random.normal(0, R[2, 2], 1)[0]
+    obs[0, 0] += np.random.normal(0, np.sqrt(R[0, 0]), 1)[0]
+    obs[0, 1] += np.random.normal(0, np.sqrt(R[1, 1]), 1)[0]
+    obs[0, 2] += np.random.normal(0, np.sqrt(R[2, 2]), 1)[0]
     return obs
 
 def Fx(state):
