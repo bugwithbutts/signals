@@ -1,0 +1,4 @@
+# .gitignore
+__pycache__/
+data files/__pycache__
+data files/data/__pycache__

@@ -130,8 +130,8 @@ with open('D:\\everything\\code\\lab\\signals\\lab1\\data files\\data\\data.pkl'
                 cur2 = i
                 break
         qq = copy.deepcopy(mx[2])
-        pp = copy.deepcopy(mx[0])
         mx = upd(mx, t - lstx, f, w)
+        pp = copy.deepcopy(mx[0])
         if cur1 != -1 and cur2 != -1: # Both observations are available
             md, P = kalman2(md, P, np.hstack((obs1[cur1][1], obs2[cur2][1])), t - lstx, qq, f, pp)
             mx = plus(mx, md)
