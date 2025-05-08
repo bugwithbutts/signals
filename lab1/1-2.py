@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Landmarks
 marks = []
-with open("D:\everything\code\lab\signals\lab1\data files\landmarks.dat") as file:
+with open("lab1\\data files\\landmarks.dat") as file:
     for line in file.readlines():
         coord = line.split()
         marks.append([float(coord[1]), float(coord[2])])
@@ -48,7 +48,7 @@ def kalman(obs, m, P, u):
     K = P @ H.T @ np.linalg.inv(S)
     m = m + (K @ (y - h).T).T
     P = P - K @ S @ K.T
-    return [m, P]
+    return m, P
 
 def ukalman(obs, m, P, u):
     # Prediction
@@ -99,7 +99,7 @@ def ukalman(obs, m, P, u):
     K = C @ np.linalg.inv(S)
     m = m + (K @ (y - mu).T).T
     P = P - K @ S @ K.T
-    return [m, P]
+    return m, P
 
 # EKF
 ekf_x, ekf_y = [], []

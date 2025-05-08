@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import copy 
 
 from importlib.machinery import SourceFileLoader
-module = SourceFileLoader("data.utils", 'D:\\everything\\code\\lab\\signals\\lab1\\data files\\data\\utils.py').load_module()
+module = SourceFileLoader("data.utils", 'lab1\\data files\\data\\utils.py').load_module()
 
 from importlib.machinery import SourceFileLoader
-module = SourceFileLoader("data.data", 'D:\\everything\\code\\lab\\signals\\lab1\\data files\\data\\data.py').load_module()
+module = SourceFileLoader("data.data", 'lab1\\data files\\data\\data.py').load_module()
 
 C = np.array([[0.99376, -0.09722, 0.05466],
                [0.09971, 0.99401, -0.04475],
@@ -84,7 +84,7 @@ def kalman2(md, P, y, dt, q, f, p):
     K = P @ Hx.T @ np.linalg.inv(S)
     md = (K @ (y - np.array([[p[0, 0], p[0, 1], p[0, 2], p[0, 0], p[0, 1], p[0, 2]]])).T).T
     P = P - K @ S @ K.T
-    return [md, P]
+    return md, P
 
 def kalman1(md, P, y, dt, q, f, p, var):
     Q = np.eye(3) * var
@@ -96,7 +96,7 @@ def kalman1(md, P, y, dt, q, f, p, var):
     K = P @ Hx.T @ np.linalg.inv(S)
     md = (K @ (y - np.array([[p[0, 0], p[0, 1], p[0, 2]]])).T).T
     P = P - K @ S @ K.T
-    return [md, P]
+    return md, P
 
 with open('D:\\everything\\code\\lab\\signals\\lab1\\data files\\data\\data.pkl', 'rb') as file:
     data = pickle.load(file)

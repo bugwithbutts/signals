@@ -68,7 +68,7 @@ def kalman(m, P, u, w, y):
     K = P @ Hx.T @ np.linalg.inv(S)
     m = m + (K @ (y.T - Hx @ m.T)).T
     P = P - K @ S @ K.T
-    return [m, P, u, w]
+    return m, P, u, w
 
 def resample(parts, www):
     tmp = [(k + np.random.uniform(low=0.0, high=1.0)) / N for k in range(N)]

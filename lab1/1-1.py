@@ -40,7 +40,7 @@ def kalman(state, m, P):
     K = P @ H.T @ np.linalg.inv(S)
     m = m + (K @ (state - m).T).T
     P = P - K @ S @ K.T
-    return [m, P]
+    return m, P
 
 state = np.array([[0.0, 0.0, 0.0]])
 state_x, state_y = [], [] 
