@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import scipy.io.wavfile as wav
 
 sampling, signal = wav.read('lab2\\data files\\filtered.wav')
-message = "N010101010"
-N = 100
+message = "N01010101"
+N = 20
 step = len(signal) // N
 
 dft = np.fft.fft(signal[0:step])
@@ -18,14 +18,15 @@ for i in range(step, len(signal), step):
     lst = tmp
 
 half = len(ph) // 2
-# Dont touch X[0] and X[N//2]
-for i in range(1, half):
+# Dont touch X[0]????
+for i in range(0, len(message) + 1): #???
     if i < len(message) and message[i] == '1':
-        ph[i] = np.pi / 2
-    elif i < len(message):
         ph[i] = -np.pi / 2
+    elif i < len(message):
+        ph[i] = np.pi / 2
     else:
         ph[i] = 0
+
 for i in range(1, half):
     ph[half * 2 - i] = -ph[i]
 
