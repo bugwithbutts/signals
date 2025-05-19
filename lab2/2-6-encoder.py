@@ -18,8 +18,8 @@ for i in range(step, len(signal), step):
     lst = tmp
 
 half = len(ph) // 2
-# Dont touch X[0]????
-for i in range(0, len(message) + 1): #???
+# Dont touch X[0]
+for i in range(0, len(message) + 1):
     if i < len(message) and message[i] == '1':
         ph[i] = -np.pi / 2
     elif i < len(message):

@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io.wavfile as wav
 
-# Ask about zero freq --- even num of samples????
 sampling, signal = wav.read('lab2\\data files\\test5.wav')
 y = np.array(np.fft.fft(signal))
 print(len(y))
