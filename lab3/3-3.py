@@ -4,7 +4,7 @@ from scipy.signal import firwin2, freqz
 
 Fc = 30000  
 Fs = 44000 
-N = 101     
+N = 101         
 
 def H_comp(w):
     # Divide by 2 * pi to make angle freq to linear
